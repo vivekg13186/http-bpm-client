@@ -19,19 +19,19 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 public class BPMClient {
-    public static  String httpGet(String url,String username,String password) throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
-        CredentialsProvider provider = new BasicCredentialsProvider();
+    public static  String httpGet(String url) throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+       /* CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials
                 = new UsernamePasswordCredentials(username, password);
         provider.setCredentials(AuthScope.ANY, credentials);
-
+*/
         SSLContextBuilder builder = new SSLContextBuilder();
         builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
                 builder.build());
 
         CloseableHttpClient client = HttpClientBuilder.create()
-                .setDefaultCredentialsProvider(provider)
+                //.setDefaultCredentialsProvider(provider)
                 .setSSLSocketFactory(sslsf)
                 .build();
 
@@ -39,7 +39,7 @@ public class BPMClient {
         return EntityUtils.toString(response.getEntity());
     }
     public static void main(String[] arg) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, IOException {
-        String text  = httpGet("https://www.google.com","dfdsf","asdsad");
+        String text  = httpGet("https://www.google.com");
         System.out.println(text);
     }
 }
